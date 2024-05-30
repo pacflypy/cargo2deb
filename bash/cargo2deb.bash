@@ -66,8 +66,6 @@ if [ "$#" -eq 2 ]; then
     prefix="$2"
 fi
 
-prefix="${prefix}/bin"
-
 abort() {
     ((status_code++))
     error "Fehler. Beende mit Statuscode: ${status_code}"
@@ -154,8 +152,8 @@ cd ${tempdir} || abort
 chmod 755 ${debian} || abort
 cd ${tempdir}/${package} || abort
 prefixbegin=$(echo "${prefix}" | awk -F '/' '{print $2}')
-cd ${builddir}/../ || abort
-rm -rf .* || abort
+cd ${builddir} || abort
+rm -rf .crates* || abort
 cd ${tempdir}/${package} || abort
 tar -cJf data.tar.xz ./${prefixbegin} || abort
 cd ${debian} || abort
