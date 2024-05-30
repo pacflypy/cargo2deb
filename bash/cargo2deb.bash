@@ -33,7 +33,7 @@ scriptmaintainer="PacFlyPy <pacflypy@outlook.com>"
 
 package="$1"
 
-scriptdepends="ar tar xz"
+scriptdepends="cargo"
 
 status_code=0
 
