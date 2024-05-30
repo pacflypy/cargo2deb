@@ -113,14 +113,14 @@ success "Succesfully created Build Dir: ${builddir}"
 status_code=4
 
 # Install cargo Binary to Debian
-msg "Installing Cargo. ${magenta}(This can take a while)${reset}"
+msg "Installing Cargo. ${magenta}\(This can take a while\)${reset}"
 cargo install ${package} --root ${builddir} &>/dev/null || abort
 success "Succesfully installed Cargo"
 
 status_code=5
 
 # Grep Metadaten
-msg "Grep Metadata from Package. ${magenta}(This can take a while)${reset}"
+msg "Grep Metadata from Package. ${magenta}\(This can take a while\)${reset}"
 version=$(cargo search ${package} | grep "${package} =" | grep ^"${package}" | awk '{print $3}' | awk -F '"' '{print $2}' || abort)
 description=$(cargo search ${package} | grep "${package} =" | grep ^"${package}" | awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' || abort)
 success "Metadata: Name: ${package}"
@@ -154,6 +154,9 @@ cd ${tempdir} || abort
 chmod 755 ${debian} || abort
 cd ${tempdir}/${package} || abort
 prefixbegin=$(echo "${prefix}" | awk -F '/' '{print $2}')
+cd ${builddir}/../ || abort
+rm -rf .* || abort
+cd ${tempdir}/${package} || abort
 tar -cJf data.tar.xz ./${prefixbegin} || abort
 cd ${debian} || abort
 tar -cJf control.tar.xz ./control || abort
